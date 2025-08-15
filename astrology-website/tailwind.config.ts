@@ -9,16 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'brand-deep-blue': '#0A192F',
-        'brand-light-blue': '#172A45',
-        'brand-gold': '#FFD700',
-        'brand-light-slate': '#a8b2d1',
-        'brand-slate': '#8892b0',
+        'brand-deep-green': '#283618',
+        'brand-light-green': '#606c38',
+        'brand-cream': '#fefae0',
+        'brand-tan': '#dda15e',
+        'brand-brown': '#bc6c25',
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
         mono: ['var(--font-geist-mono)'],
-        serif: ['"Playfair Display"', 'serif'],
+        serif: ['"Lora"', 'serif'],
       },
     },
   },

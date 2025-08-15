@@ -21,22 +21,22 @@ const CARD_OPTIONS: StripeCardElementOptions = {
     iconStyle: 'solid',
     style: {
         base: {
-            iconColor: '#FFD700',
-            color: '#a8b2d1',
+            iconColor: '#283618',
+            color: '#283618',
             fontWeight: '500',
-            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+            fontFamily: 'Lora, serif',
             fontSize: '16px',
             fontSmoothing: 'antialiased',
             ':-webkit-autofill': {
-                color: '#fce883',
+                color: '#fefae0',
             },
             '::placeholder': {
-                color: '#8892b0',
+                color: '#606c38',
             },
         },
         invalid: {
-            iconColor: '#ffc7ee',
-            color: '#ffc7ee',
+            iconColor: '#bc6c25',
+            color: '#bc6c25',
         },
     },
 };
@@ -44,6 +44,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [name, setName] = useState('');
   const [selectedService, setSelectedService] = useState(services[0]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ const CheckoutForm = () => {
       payment_method: {
         card: cardElement,
         billing_details: {
-          name: 'Jenny Rosen', // This should be dynamic
+          name: name,
         },
       },
     });
@@ -95,8 +96,8 @@ const CheckoutForm = () => {
 
   if (paymentSucceeded) {
     return (
-        <div className="text-center text-white">
-            <h2 className="text-3xl font-bold text-green-400">Payment Successful!</h2>
+        <div className="text-center text-brand-deep-green">
+            <h2 className="text-3xl font-bold text-brand-light-green">Payment Successful!</h2>
             <p className="text-brand-slate mt-2">Your appointment has been booked. You will receive a confirmation email shortly.</p>
         </div>
     )
@@ -104,14 +105,29 @@ const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+        <div className="mb-8">
+            <label htmlFor="name" className="block text-lg font-medium text-brand-deep-green mb-2">
+                Full Name
+            </label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                className="w-full p-4 bg-brand-cream border border-brand-slate rounded-lg text-brand-deep-green focus:ring-brand-light-green focus:border-brand-light-green"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+            />
+        </div>
+
       <div className="mb-8">
-        <label htmlFor="service" className="block text-lg font-medium text-brand-light-slate mb-2">
+        <label htmlFor="service" className="block text-lg font-medium text-brand-deep-green mb-2">
           Select a Service
         </label>
         <select
           id="service"
           name="service"
-          className="w-full p-4 bg-brand-light-blue border border-brand-slate rounded-lg text-brand-light-slate focus:ring-brand-gold focus:border-brand-gold"
+          className="w-full p-4 bg-brand-cream border border-brand-slate rounded-lg text-brand-deep-green focus:ring-brand-light-green focus:border-brand-light-green"
           value={selectedService}
           onChange={(e) => setSelectedService(e.target.value)}
         >
@@ -124,20 +140,20 @@ const CheckoutForm = () => {
       </div>
 
       <div className="mb-8">
-        <label className="block text-lg font-medium text-brand-light-slate mb-2">
+        <label className="block text-lg font-medium text-brand-deep-green mb-2">
             Card Details
         </label>
-        <div className="p-4 bg-brand-light-blue border border-brand-slate rounded-lg">
+        <div className="p-4 bg-brand-cream border border-brand-slate rounded-lg">
             <CardElement options={CARD_OPTIONS} />
         </div>
       </div>
 
-      {error && <div className="text-red-400 mb-4">{error}</div>}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full bg-brand-gold text-brand-deep-blue py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity disabled:bg-brand-slate"
+        className="w-full bg-brand-slate text-brand-cream py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity disabled:bg-brand-light-slate"
       >
         {loading ? 'Processing...' : 'Pay & Book Now'}
       </button>
@@ -147,13 +163,13 @@ const CheckoutForm = () => {
 
 export default function BookAppointmentPage() {
   return (
-    <div className="bg-brand-deep-blue text-white py-24">
+    <div className="bg-brand-cream text-brand-deep-green py-24">
       <div className="container mx-auto max-w-xl">
         <div className="text-center mb-12">
             <h1 className="text-5xl font-serif font-bold">Book an Appointment</h1>
-            <p className="text-lg text-brand-slate mt-4">Secure your session with our esteemed astrologer in just a few clicks.</p>
+            <p className="text-lg text-brand-deep-green mt-4">Secure your session with our esteemed astrologer in just a few clicks.</p>
         </div>
-        <div className="bg-brand-light-blue p-8 rounded-lg shadow-2xl">
+        <div className="bg-brand-light-green p-8 rounded-lg shadow-2xl">
             <Elements stripe={stripePromise}>
                 <CheckoutForm />
             </Elements>
